@@ -18,8 +18,8 @@ class ProyectoFactory extends Factory
             'titulo' => $this->faker->sentence(3),
             'descripcion' => $this->faker->paragraph(5),
             'url' => $this->faker->optional()->url(),
-            'imagen' => $this->faker->optional()->imageUrl(800, 600, 'tech', true, 'proyecto'),
-            'tecnologias' => implode(', ', $this->faker->randomElements($tecnologias, rand(2, 5))),
+            'imagen' => null,
+            'tecnologias' => implode(', ', $this->faker->randomElements($tecnologias, rand(3, 5))),
             'publicado' => $this->faker->boolean(80), // 80% publicados
         ];
     }

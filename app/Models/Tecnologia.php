@@ -9,5 +9,5 @@ class Tecnologia extends Model
 {
     use HasFactory;
     protected $table = 'tecnologias';
-    protected $fillable = ['nombre', 'nivel', 'experiencia_anios', 'certificacion'];
+    protected $fillable = ['nombre', 'nivel', 'experiencia_anios', 'descripcion'];
 }

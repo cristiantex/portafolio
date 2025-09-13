@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre'); // Ej: Laravel, React
             $table->enum('nivel', ['Básico', 'Intermedio', 'Avanzado', 'Experto']);
             $table->integer('experiencia_anios')->nullable(); // años de experiencia
-            $table->string('certificacion')->nullable(); // opcional
+            $table->string('descripcion')->nullable(); // opcional
             $table->timestamps();
         });
     }

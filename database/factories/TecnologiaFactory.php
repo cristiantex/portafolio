@@ -18,7 +18,7 @@ class TecnologiaFactory extends Factory
             'nombre' => $this->faker->unique()->randomElement($tecnologias),
             'nivel' => $this->faker->randomElement(['Básico', 'Intermedio', 'Avanzado', 'Experto']),
             'experiencia_anios' => $this->faker->numberBetween(1, 10),
-            'certificacion' => $this->faker->boolean(30) ? $this->faker->sentence(3) : null,
+            'descripcion' => $this->faker->boolean(30) ? $this->faker->sentence(3) : null,
         ];
     }
 }
