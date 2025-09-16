@@ -78,24 +78,6 @@
                 @endforeach
             </div>
         </section>
-        
-        <!-- PROYECTOS -->
-        <!-- <section id="proyectos" class="bg-gradient-to-r from-gray-950 to-gray-900 py-20 px-6 text-white">
-            <h2 class="text-3xl font-bold mb-12 text-center text-blue-500">Proyectos</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 container mx-auto">
-                @foreach ($proyectos as $proy)
-                    <div class="bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">{{ $proy->titulo }}</h3>
-                            <p class="text-gray-300 mb-4">{{ $proy->descripcion }}</p>
-                            @if($proy->url)
-                                <a href="{{ $proy->url }}" target="_blank" class="text-blue-500 font-semibold hover:underline">Ver más →</a>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </section> -->
 
         <!-- PROYECTOS -->
         <section id="proyectos" class="bg-gradient-to-r from-gray-950 to-gray-900 py-20 px-6 text-white">
@@ -181,9 +163,9 @@
                             <div class="mt-4">
                                 <h4 class="text-sm font-semibold text-gray-300 mb-2">Tecnologías:</h4>
                                 <div class="flex flex-wrap gap-2">
-                                    @foreach ($exp->tecnologias as $tec)
+                                    @foreach (explode(',', $exp->tecnologias) as $tec)
                                         <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">
-                                            {{ $tec }}
+                                            {{ trim($tec) }}
                                         </span>
                                     @endforeach
                                 </div>

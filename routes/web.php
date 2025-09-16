@@ -6,8 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\FormacionController;
 use App\Http\Controllers\TecnologiaController;
+use App\Http\Controllers\ExperienciaController;
+use App\Http\Controllers\ProyectoController;
 
-// Route::get('/', function () { return view('welcome');});
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Login
@@ -40,4 +41,22 @@ Route::prefix('tecnologias')->group(function () {
     Route::get('/{tecnologia}/edit', [TecnologiaController::class, 'edit'])->name('tecnologias.edit');
     Route::put('/{tecnologia}', [TecnologiaController::class, 'update'])->name('tecnologias.update');
     Route::delete('/{tecnologia}', [TecnologiaController::class, 'destroy'])->name('tecnologias.destroy');
+});
+
+Route::prefix('experiencias')->group(function () {
+    Route::get('/', [ExperienciaController::class, 'index'])->name('experiencias.index');
+    Route::get('/create', [ExperienciaController::class, 'create'])->name('experiencias.create');
+    Route::post('/store', [ExperienciaController::class, 'store'])->name('experiencias.store');
+    Route::get('/{experiencia}/edit', [ExperienciaController::class, 'edit'])->name('experiencias.edit');
+    Route::put('/{experiencia}', [ExperienciaController::class, 'update'])->name('experiencias.update');
+    Route::delete('/{experiencia}', [ExperienciaController::class, 'destroy'])->name('experiencias.destroy');
+});
+
+Route::prefix('proyectos')->group(function () {
+    Route::get('/', [ProyectoController::class, 'index'])->name('proyectos.index');
+    Route::get('/create', [ProyectoController::class, 'create'])->name('proyectos.create');
+    Route::post('/store', [ProyectoController::class, 'store'])->name('proyectos.store');
+    Route::get('/{proyecto}/edit', [ProyectoController::class, 'edit'])->name('proyectos.edit');
+    Route::put('/{proyecto}', [ProyectoController::class, 'update'])->name('proyectos.update');
+    Route::delete('/{proyecto}', [ProyectoController::class, 'destroy'])->name('proyectos.destroy');
 });

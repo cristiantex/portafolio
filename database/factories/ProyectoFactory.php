@@ -8,11 +8,8 @@ class ProyectoFactory extends Factory
 {
     public function definition(): array
     {
-        $tecnologias = [
-            'Laravel', 'Livewire', 'Vue.js', 'React',
-            'TailwindCSS', 'Bootstrap', 'MySQL', 'PostgreSQL',
-            'Docker', 'AWS'
-        ];
+        $tecnologias = [ 'PHP', 'Laravel', 'Livewire', 'Vue.js', 'React', 'TailwindCSS', 'Bootstrap', 'MySQL', 'PostgreSQL',
+            'Docker', 'AWS', 'Node.js', 'Python', 'Django', 'Redis', 'Git', 'GraphQL', 'TypeScript', 'Sass'];
 
         return [
             'titulo' => $this->faker->sentence(3),

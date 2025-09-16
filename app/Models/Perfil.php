@@ -10,14 +10,7 @@ class Perfil extends Model
     use HasFactory;
     protected $table = 'perfil';
     protected $fillable = [
-        'alias',
-        'nombre',
-        'profesion',
-        'descripcion',
-        'email',
-        'telefono',
-        'linkedin',
-        'github',
-        'foto_perfil',
+        'alias', 'nombre', 'profesion', 'descripcion', 'email',
+        'telefono', 'linkedin', 'github', 'foto_perfil',
     ];
 }

@@ -8,11 +8,8 @@ class TecnologiaFactory extends Factory
 {
     public function definition(): array
     {
-        $tecnologias = [
-            'PHP', 'Laravel', 'JavaScript', 'Vue.js', 'React',
-            'MySQL', 'PostgreSQL', 'Docker', 'AWS', 'Git',
-            'Node.js', 'TailwindCSS'
-        ];
+        $tecnologias = [ 'PHP', 'Laravel', 'Livewire', 'Vue.js', 'React', 'TailwindCSS', 'Bootstrap', 'MySQL', 'PostgreSQL',
+            'Docker', 'AWS', 'Node.js', 'Python', 'Django', 'Redis', 'Git', 'GraphQL', 'TypeScript', 'Sass'];
 
         return [
             'nombre' => $this->faker->unique()->randomElement($tecnologias),

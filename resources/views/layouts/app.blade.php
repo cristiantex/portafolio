@@ -44,44 +44,32 @@
             </div>
             <ul class="space-y-2 p-4">
                 <li>
-                    <a href="{{ route('welcome') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
-                        Inicio
-                    </a>
+                    <a href="{{ route('welcome') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('perfil.edit') }}" class="block py-2 px-4 hover:bg-gray-700">Perfil</a>
-                </li>
-
-                <li>
-                    <a href="{{ route('formacion.index') }}" class="block py-2 px-4 hover:bg-gray-700">Formación</a>
-                </li>
-
-                <li>
-                    <a href="{{ route('tecnologias.index') }}" class="block py-2 px-4 hover:bg-gray-700">Tecnologias</a>
-                </li>
-
-                {{-- <li>
-                    <a href="#" class="block px-4 py-2 rounded hover:bg-gray-700">
-                        Reportes
-                    </a>
+                    <a href="{{ route('perfil.edit') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Perfil</a>
                 </li>
                 <li>
-                    <a href="#" class="block px-4 py-2 rounded hover:bg-gray-700">
-                        Configuración
-                    </a>
-                </li> --}}
+                    <a href="{{ route('formacion.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Formación</a>
+                </li>
+                <li>
+                    <a href="{{ route('tecnologias.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Tecnologías</a>
+                </li>
+                <li>
+                    <a href="{{ route('experiencias.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Experiencias</a>
+                </li>
+                <li>
+                    <a href="{{ route('proyectos.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Proyectos</a>
+                </li>
             </ul>
         </aside>
 
         <!-- Sidebar móvil -->
-        <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" 
-             x-show="sidebarOpen" @click="sidebarOpen = false"></div>
-
+        <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" x-show="sidebarOpen" @click="sidebarOpen = false"></div>
         <aside class="fixed inset-y-0 left-0 w-64 bg-gray-900 text-gray-200 z-50 transform -translate-x-full transition-transform duration-300 md:hidden"
                :class="{ 'translate-x-0': sidebarOpen }">
             <div class="p-6 text-lg font-semibold border-b border-gray-700 flex justify-between items-center">
-                Menú
-                <button class="text-gray-400 hover:text-white" @click="sidebarOpen = false">&times;</button>
+                Menú <button class="text-gray-400 hover:text-white" @click="sidebarOpen = false">&times;</button>
             </div>
             <ul class="space-y-2 p-4">
                 <li>
@@ -90,13 +78,28 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
-                        Reportes
+                    <a href="{{ route('perfil.edit') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
+                        Perfil
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
-                        Configuración
+                    <a href="{{ route('formacion.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
+                        Formación
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('tecnologias.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
+                        Tecnologías
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('experiencias.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
+                        Experiencias
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('proyectos.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
+                        Proyectos
                     </a>
                 </li>
             </ul>
@@ -112,6 +115,5 @@
     <footer class="bg-gray-800 text-gray-300 text-center py-4">
         © {{ date('Y') }} - Mi Dashboard. Todos los derechos reservados.
     </footer>
-
 </body>
 </html>

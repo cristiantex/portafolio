@@ -7,15 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Experiencia extends Model
 {
-    protected $table = 'experiencias';
-    public $timestamps = false;
     use HasFactory;
+    public $timestamps = false;
+    protected $table = 'experiencias';
     protected $fillable = [
         'empresa', 'cargo', 'fecha_inicio', 'fecha_fin',
         'descripcion', 'tecnologias', 'logros'
-    ];
-
-    protected $casts = [
-        'tecnologias' => 'array',
     ];
 }

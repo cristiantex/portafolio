@@ -10,6 +10,8 @@ class ExperienciaFactory extends Factory
     {
         $empresas = ['Google', 'Microsoft', 'Amazon', 'Startup XYZ', 'Banco Nacional', 'Consultora ABC'];
         $cargos = ['Desarrollador Backend', 'Desarrollador Fullstack', 'Ingeniero de Software', 'Líder Técnico'];
+        $tecnologias = [ 'PHP', 'Laravel', 'Livewire', 'Vue.js', 'React', 'TailwindCSS', 'Bootstrap', 'MySQL', 'PostgreSQL',
+            'Docker', 'AWS', 'Node.js', 'Python', 'Django', 'Redis', 'Git', 'GraphQL', 'TypeScript', 'Sass'];
 
         return [
             'empresa' => $this->faker->randomElement($empresas),
@@ -17,10 +19,7 @@ class ExperienciaFactory extends Factory
             'fecha_inicio' => $this->faker->dateTimeBetween('-10 years', '-1 year'),
             'fecha_fin' => $this->faker->boolean(70) ? $this->faker->dateTimeBetween('-1 year', 'now') : null,
             'descripcion' => $this->faker->paragraph(3),
-            'tecnologias' => $this->faker->randomElements(
-                ['PHP', 'Laravel', 'Vue.js', 'React', 'MySQL', 'AWS', 'Docker'],
-                $this->faker->numberBetween(2, 5)
-            ),
+            'tecnologias' => implode(', ', $this->faker->randomElements($tecnologias, rand(3, 5))),
             'logros' => $this->faker->boolean(50) ? $this->faker->sentence(6) : null,
         ];
     }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable(); // null si es actual
             $table->text('descripcion')->nullable(); // resumen de tareas
-            $table->json('tecnologias')->nullable(); // guardar array de ids de tecnologias
+            $table->string('tecnologias')->nullable(); // guardar array de ids de tecnologias
             $table->text('logros')->nullable();
             $table->timestamps();
         });

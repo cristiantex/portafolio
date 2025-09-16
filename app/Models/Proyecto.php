@@ -10,11 +10,7 @@ class Proyecto extends Model
     use HasFactory;
     protected $table = 'proyectos';
     protected $fillable = [
-        'titulo',
-        'descripcion',
-        'url',
-        'imagen',
-        'tecnologias',
-        'publicado',
+        'titulo', 'descripcion', 'url',
+        'imagen', 'tecnologias', 'publicado',
     ];
 }
