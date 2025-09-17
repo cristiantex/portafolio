@@ -26,7 +26,7 @@
             </svg>
         </button>
 
-        <h1 class="text-xl font-bold">Mi Dashboard</h1>
+        <h1 class="text-xl font-bold">Mi Portafolio</h1>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
@@ -44,23 +44,47 @@
             </div>
             <ul class="space-y-2 p-4">
                 <li>
-                    <a href="{{ route('welcome') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Inicio</a>
+                    <a href="{{ route('welcome') }}" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-gray-700 transition">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Inicio</span>
+                    </a>
                 </li>
+
                 <li>
-                    <a href="{{ route('perfil.edit') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Perfil</a>
+                    <a href="{{ route('perfil.edit') }}" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-gray-700 transition">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Perfil</span>
+                    </a>
                 </li>
+
                 <li>
-                    <a href="{{ route('formacion.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Formación</a>
+                    <a href="{{ route('formacion.index') }}" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-gray-700 transition">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Formación</span>
+                    </a>
                 </li>
+
                 <li>
-                    <a href="{{ route('tecnologias.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Tecnologías</a>
+                    <a href="{{ route('tecnologias.index') }}" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-gray-700 transition">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Tecnologías</span>
+                    </a>
                 </li>
+
                 <li>
-                    <a href="{{ route('experiencias.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Experiencias</a>
+                    <a href="{{ route('experiencias.index') }}" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-gray-700 transition">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span>Experiencias</span>
+                    </a>
                 </li>
+
                 <li>
-                    <a href="{{ route('proyectos.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700">Proyectos</a>
+                    <a href="{{ route('proyectos.index') }}" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-gray-700 transition">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Proyectos</span>
+                    </a>
                 </li>
+
             </ul>
         </aside>
 
@@ -74,32 +98,32 @@
             <ul class="space-y-2 p-4">
                 <li>
                     <a href="{{ route('welcome') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
-                        Inicio
+                        <i class="fa-solid fa-house"></i> Inicio
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('perfil.edit') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
-                        Perfil
+                        <i class="fa-solid fa-user"></i> Perfil
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('formacion.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
-                        Formación
+                        <i class="fa-solid fa-graduation-cap"></i> Formación
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('tecnologias.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
-                        Tecnologías
+                        <i class="fa-solid fa-code"></i> Tecnologías
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('experiencias.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
-                        Experiencias
+                        <i class="fa-solid fa-briefcase"></i> Experiencias
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('proyectos.index') }}" class="block px-4 py-2 rounded hover:bg-gray-700" @click="sidebarOpen = false">
-                        Proyectos
+                        <i class="fa-solid fa-diagram-project"></i> Proyectos
                     </a>
                 </li>
             </ul>
@@ -113,7 +137,7 @@
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-gray-300 text-center py-4">
-        © {{ date('Y') }} - Mi Dashboard. Todos los derechos reservados.
+        © {{ date('Y') }} - Mi Portafolio. Todos los derechos reservados.
     </footer>
 </body>
 </html>

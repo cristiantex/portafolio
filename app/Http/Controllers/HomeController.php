@@ -11,9 +11,6 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Mostrar el portafolio completo
-     */
     public function index()
     {
         return view('home', [
@@ -22,6 +19,21 @@ class HomeController extends Controller
             'experiencias' => Experiencia::orderBy('fecha_inicio', 'desc')->get(),
             'formacions'   => Formacion::orderBy('fecha_inicio', 'desc')->get(),
             'proyectos'    => Proyecto::latest()->get(),
+        ]);
+    }
+
+    public function dashboard()
+    {
+        $perfil = Perfil::first();
+
+        return view('welcome', [
+            'alias'        => $perfil ? $perfil->alias : 'Administrador',
+            'perfil'       => $perfil ?? null,       
+            'tecnologias'  => Tecnologia::count(),
+            'experiencias' => Experiencia::count(),
+            'formacions'   => Formacion::count(),
+            'proyectos'    => Proyecto::count(),
+            'proyectosPendientes' => Proyecto::where('publicado', 0 )->count(),
         ]);
     }
 }

@@ -102,7 +102,7 @@
                                 <div class="mb-4">
                                     <a href="{{ $proy->url }}" target="_blank" 
                                     class="mt-auto inline-block text-blue-500 font-semibold hover:underline">
-                                        Ver github
+                                        Ver proyecto
                                     </a>
                                 </div>
                             @endif
