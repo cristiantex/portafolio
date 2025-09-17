@@ -107,10 +107,9 @@
         </div>
     </div>
 
-    <!-- Gráfico simple -->
     <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-xl font-bold mb-4 text-gray-800">Actividad 📊</h3>
-        <canvas id="activityChart" height="150"></canvas>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Tecnologías más usadas en proyectos 📊</h3>
+        <canvas id="activityChart" height="120"></canvas>
     </div>
 
 </div>
@@ -121,15 +120,13 @@
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Proyectos', 'Experiencias', 'Formación', 'Tecnologías'],
+            labels: {!! $tecnologiasLabels !!},
             datasets: [{
                 label: 'Cantidad',
-                data: [{{ $proyectos }}, {{ $experiencias }}, {{ $formacions }}, {{ $tecnologias }}],
+                data: {!! $tecnologiasData !!},
                 backgroundColor: [
-                    '#ec4899', // rosa
-                    '#8b5cf6', // púrpura
-                    '#10b981', // verde
-                    '#3b82f6'  // azul
+                    '#ec4899', '#8b5cf6', '#10b981', '#3b82f6',
+                    '#f59e0b', '#ef4444', '#14b8a6', '#6366f1'
                 ],
                 borderWidth: 1
             }]
@@ -137,11 +134,7 @@
         options: {
             plugins: {
                 legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#374151',
-                        font: { size: 14 }
-                    }
+                    display: false
                 }
             },
             scales: {

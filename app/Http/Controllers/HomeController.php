@@ -26,6 +26,22 @@ class HomeController extends Controller
     {
         $perfil = Perfil::first();
 
+        $allTecnologias = Proyecto::pluck('tecnologias')->toArray();
+        $tecnologiasCount = [];
+
+        foreach ($allTecnologias as $tecs) {
+            if ($tecs) {
+                $items = array_map('trim', explode(',', $tecs));
+                foreach ($items as $item) {
+                    if (!empty($item)) {
+                        $tecnologiasCount[$item] = ($tecnologiasCount[$item] ?? 0) + 1;
+                    }
+                }
+            }
+        }
+
+        arsort($tecnologiasCount);
+
         return view('welcome', [
             'alias'        => $perfil ? $perfil->alias : 'Administrador',
             'perfil'       => $perfil ?? null,       
@@ -34,6 +50,10 @@ class HomeController extends Controller
             'formacions'   => Formacion::count(),
             'proyectos'    => Proyecto::count(),
             'proyectosPendientes' => Proyecto::where('publicado', 0 )->count(),
+
+            // Datos ordenados para Chart.js
+            'tecnologiasLabels' => json_encode(array_keys($tecnologiasCount)),
+            'tecnologiasData'   => json_encode(array_values($tecnologiasCount)),
         ]);
     }
 }
