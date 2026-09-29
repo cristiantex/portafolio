@@ -2,58 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TecnologiaRequest;
 use App\Models\Tecnologia;
-use Illuminate\Http\Request;
 
 class TecnologiaController extends Controller
 {
     public function index()
     {
-        $tecnologias = Tecnologia::orderBy('nombre')->get();
-        return view('tecnologias.index', compact('tecnologias'));
+        return view('admin.tecnologias.index', [
+            'tecnologias' => Tecnologia::orderBy('nombre')->get(),
+        ]);
     }
 
     public function create()
     {
-        return view('tecnologias.create');
+        return view('admin.tecnologias.form', ['tecnologia' => new Tecnologia]);
     }
 
-    public function store(Request $request)
+    public function store(TecnologiaRequest $request)
     {
-        $validated = $request->validate([
-            'nombre'            => 'required|string|max:255',
-            'nivel'             => 'required|in:Básico,Intermedio,Avanzado,Experto',
-            'experiencia_anios' => 'nullable|integer|min:0',
-            'descripcion'       => 'nullable|string|max:1000',
-        ]);
+        Tecnologia::create($request->validated());
 
-        Tecnologia::create($validated);
-
-        return redirect()
-            ->route('tecnologias.index')
-            ->with('success', 'Tecnología agregada correctamente.');
+        return redirect()->route('tecnologias.index')->with('success', 'Tecnología agregada correctamente.');
     }
 
     public function edit(Tecnologia $tecnologia)
     {
-        return view('tecnologias.edit', compact('tecnologia'));
+        return view('admin.tecnologias.form', compact('tecnologia'));
     }
 
-    public function update(Request $request, Tecnologia $tecnologia)
+    public function update(TecnologiaRequest $request, Tecnologia $tecnologia)
     {
-        // Normaliza cadenas vacías a null
-        $request->merge([
-            'descripcion' => $request->input('descripcion') ?: null,
-        ]);
-
-        $validated = $request->validate([
-            'nombre'            => 'required|string|max:255',
-            'nivel'             => 'required|in:Básico,Intermedio,Avanzado,Experto',
-            'experiencia_anios' => 'nullable|integer|min:0',
-            'descripcion'       => 'nullable|string|max:1000',
-        ]);
-
-        $tecnologia->update($validated);
+        $tecnologia->update($request->validated());
 
         return redirect()->route('tecnologias.index')->with('success', 'Tecnología actualizada correctamente.');
     }
@@ -61,6 +41,7 @@ class TecnologiaController extends Controller
     public function destroy(Tecnologia $tecnologia)
     {
         $tecnologia->delete();
+
         return redirect()->route('tecnologias.index')->with('success', 'Tecnología eliminada correctamente.');
     }
 }

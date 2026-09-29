@@ -2,73 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ExperienciaRequest;
 use App\Models\Experiencia;
-use Illuminate\Http\Request;
 
 class ExperienciaController extends Controller
 {
     public function index()
     {
-        $experiencias = Experiencia::orderBy('fecha_inicio', 'desc')->get();
-        return view('experiencias.index', compact('experiencias'));
+        return view('admin.experiencias.index', [
+            'experiencias' => Experiencia::orderByDesc('fecha_inicio')->get(),
+        ]);
     }
 
     public function create()
     {
-        return view('experiencias.create');
+        return view('admin.experiencias.form', ['experiencia' => new Experiencia]);
     }
 
-    public function store(Request $request)
+    public function store(ExperienciaRequest $request)
     {
-        $validated = $request->validate([
-            'empresa'      => 'required|string|max:255',
-            'cargo'        => 'required|string|max:255',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin'    => 'nullable|date|after_or_equal:fecha_inicio',
-            'descripcion'  => 'nullable|string|max:2000',
-            'tecnologias'  => 'nullable|string',
-            'logros'       => 'nullable|string|max:2000',
-        ]);
+        Experiencia::create($request->validated());
 
-        Experiencia::create($validated);
-
-        return redirect()
-            ->route('experiencias.index')
-            ->with('success', 'Experiencia agregada correctamente.');
+        return redirect()->route('experiencias.index')->with('success', 'Experiencia agregada correctamente.');
     }
 
     public function edit(Experiencia $experiencia)
     {
-        return view('experiencias.edit', compact('experiencia'));
+        return view('admin.experiencias.form', compact('experiencia'));
     }
 
-    public function update(Request $request, Experiencia $experiencia)
+    public function update(ExperienciaRequest $request, Experiencia $experiencia)
     {
-        $request->merge([
-            'descripcion' => $request->input('descripcion') ?: null,
-            'logros'      => $request->input('logros') ?: null,
-        ]);
+        $experiencia->update($request->validated());
 
-        $validated = $request->validate([
-            'empresa'      => 'required|string|max:255',
-            'cargo'        => 'required|string|max:255',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin'    => 'nullable|date|after_or_equal:fecha_inicio',
-            'descripcion'  => 'nullable|string|max:2000',
-            'tecnologias'  => 'nullable|string',
-            'logros'       => 'nullable|string|max:2000',
-        ]);
-
-        $experiencia->update($validated);
-
-        return redirect()
-            ->route('experiencias.index')
-            ->with('success', 'Experiencia actualizada correctamente.');
+        return redirect()->route('experiencias.index')->with('success', 'Experiencia actualizada correctamente.');
     }
 
     public function destroy(Experiencia $experiencia)
     {
         $experiencia->delete();
+
         return redirect()->route('experiencias.index')->with('success', 'Experiencia eliminada correctamente.');
     }
 }

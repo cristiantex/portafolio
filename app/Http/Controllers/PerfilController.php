@@ -2,56 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\PerfilRequest;
 use App\Models\Perfil;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PerfilController extends Controller
 {
-    /**
-     * Mostrar el formulario de edición de perfil
-     */
     public function edit()
     {
-        // Solo necesitas un registro (ejemplo: id=1 para un solo usuario)
-        $perfil = Perfil::first();
-
-        return view('perfil', compact('perfil'));
+        return view('admin.perfil', ['perfil' => Perfil::first() ?? new Perfil]);
     }
 
-    /**
-     * Actualizar los datos del perfil
-     */
-    public function update(Request $request)
+    public function update(PerfilRequest $request)
     {
-        $perfil = Perfil::first();
+        $perfil = Perfil::first() ?? new Perfil;
+        $datos = $request->safe()->except(['foto_perfil', 'cv']);
 
-        // Validación de campos obligatorios
-        $validated = $request->validate([
-            'alias'       => 'required|string|max:50',
-            'nombre'      => 'required|string|max:100',
-            'profesion'   => 'nullable|string|max:100',
-            'descripcion' => 'nullable|string|max:500',
-            'email'       => 'nullable|email|max:150',
-            'telefono'    => 'nullable|string|max:20',
-            'linkedin'    => 'nullable|string|max:150',
-            'github'      => 'nullable|string|max:150',
-            'foto_perfil' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-        ]);
+        $perfil->fill($datos);
 
-        if (!$perfil) {
-            $perfil = new Perfil();
+        if ($request->hasFile('foto_perfil')) {
+            $this->borrarArchivo($perfil->foto_perfil);
+            $perfil->foto_perfil = $request->file('foto_perfil')->store('perfil', 'public');
         }
 
-        $perfil->fill($validated);
-
-        // Subida de foto
-        if ($request->hasFile('foto_perfil')) {
-            if ($perfil->foto_perfil && Storage::exists('public/'.$perfil->foto_perfil)) {
-                Storage::delete('public/'.$perfil->foto_perfil);
-            }
-            $path = $request->file('foto_perfil')->store('perfil', 'public');
-            $perfil->foto_perfil = $path;
+        if ($request->hasFile('cv')) {
+            $this->borrarArchivo($perfil->cv);
+            $perfil->cv = $request->file('cv')->store('perfil', 'public');
         }
 
         $perfil->save();
@@ -59,4 +36,13 @@ class PerfilController extends Controller
         return redirect()->route('perfil.edit')->with('success', 'Perfil actualizado correctamente.');
     }
 
+    /** Solo borra archivos propios (no las URL externas de datos antiguos). */
+    private function borrarArchivo(?string $ruta): void
+    {
+        if (blank($ruta) || Str::startsWith($ruta, ['http://', 'https://', 'data:'])) {
+            return;
+        }
+
+        Storage::disk('public')->delete($ruta);
+    }
 }

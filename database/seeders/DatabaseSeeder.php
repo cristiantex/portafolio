@@ -2,17 +2,28 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * Datos de ejemplo para desarrollo local. Sirven para ver el sitio completo;
+ * el contenido real se carga desde el mantenedor. No corre en producción.
+ */
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        \App\Models\Perfil::factory()->create();
-        \App\Models\Proyecto::factory(9)->create();
-        \App\Models\Tecnologia::factory(12)->create();
-        \App\Models\Experiencia::factory(6)->create();
-        \App\Models\Formacion::factory(6)->create();
+        if (app()->isProduction()) {
+            $this->command?->warn('DatabaseSeeder omitido: contiene datos de ejemplo y no debe correr en producción.');
+
+            return;
+        }
+
+        $this->call([
+            PerfilSeeder::class,
+            TecnologiaSeeder::class,
+            ExperienciaSeeder::class,
+            FormacionSeeder::class,
+            ProyectoSeeder::class,
+        ]);
     }
 }

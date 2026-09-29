@@ -2,35 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function showLogin()
     {
-        return view('auth.login');
+        return view('admin.login');
     }
 
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
-        $request->validate([
-            'user' => 'required',
-            'password' => 'required',
+        $credenciales = $request->validate([
+            'user' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        if ($request->user === env('LOGIN_USER') && $request->password === env('LOGIN_PASS')) {
-            $request->session()->put('logged_in', true);
-            return redirect()->route('welcome');
+        if (! $this->credencialesValidas($credenciales['user'], $credenciales['password'])) {
+            return back()
+                ->withInput($request->only('user'))
+                ->withErrors(['user' => 'Usuario o contraseña incorrectos.']);
         }
 
-        return back()->withErrors([
-            'user' => 'Credenciales inválidas',
-        ]);
+        $request->session()->regenerate();
+        $request->session()->put('logged_in', true);
+
+        return redirect()->intended(route('welcome'));
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
-        $request->session()->forget('logged_in');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('login');
+    }
+
+    private function credencialesValidas(string $usuario, string $clave): bool
+    {
+        $config = config('portafolio.login');
+
+        // Sin credenciales configuradas nadie entra: falla cerrado.
+        if (blank($config['user']) || (blank($config['pass']) && blank($config['pass_hash']))) {
+            return false;
+        }
+
+        $usuarioOk = hash_equals((string) $config['user'], $usuario);
+        $claveOk = filled($config['pass_hash'])
+            ? Hash::check($clave, $config['pass_hash'])
+            : hash_equals((string) $config['pass'], $clave);
+
+        return $usuarioOk && $claveOk;
     }
 }

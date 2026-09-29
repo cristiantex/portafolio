@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tecnologia extends Model
 {
     use HasFactory;
+
     protected $table = 'tecnologias';
-    protected $fillable = ['nombre', 'nivel', 'experiencia_anios', 'descripcion'];
+
+    protected $fillable = ['nombre', 'categoria', 'nivel', 'experiencia_anios', 'descripcion'];
 }

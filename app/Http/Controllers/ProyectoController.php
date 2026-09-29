@@ -2,98 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProyectoRequest;
 use App\Models\Proyecto;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProyectoController extends Controller
 {
     public function index()
     {
-        $proyectos = Proyecto::orderBy('titulo')->get();
-        return view('proyectos.index', compact('proyectos'));
+        return view('admin.proyectos.index', [
+            'proyectos' => Proyecto::orderBy('titulo')->get(),
+        ]);
     }
 
     public function create()
     {
-        return view('proyectos.create');
+        return view('admin.proyectos.form', ['proyecto' => new Proyecto(['publicado' => true])]);
     }
 
-    public function store(Request $request)
+    public function store(ProyectoRequest $request)
     {
-        $validated = $request->validate([
-            'titulo'       => 'required|string|max:255',
-            'descripcion'  => 'nullable|string|max:2000',
-            'url'          => 'nullable|url|max:500',
-            'imagen'       => 'nullable|image|max:2048', // max 2MB
-            'tecnologias'  => 'nullable|string|max:1000',
-            'publicado'    => 'nullable|boolean',
-        ]);
+        $datos = $request->safe()->except('imagen');
+        $datos['publicado'] = $request->boolean('publicado');
 
-        // Manejo de imagen
         if ($request->hasFile('imagen')) {
-            $path = $request->file('imagen')->store('proyectos', 'public');
-            $validated['imagen'] = 'storage/' . $path;
+            $datos['imagen'] = 'storage/'.$request->file('imagen')->store('proyectos', 'public');
         }
 
-        // Checkbox 'publicado' por defecto a 0 si no viene
-        $validated['publicado'] = $request->has('publicado') ? 1 : 0;
+        Proyecto::create($datos);
 
-        Proyecto::create($validated);
-
-        return redirect()
-            ->route('proyectos.index')
-            ->with('success', 'Proyecto agregado correctamente.');
+        return redirect()->route('proyectos.index')->with('success', 'Proyecto agregado correctamente.');
     }
 
     public function edit(Proyecto $proyecto)
     {
-        return view('proyectos.edit', compact('proyecto'));
+        return view('admin.proyectos.form', compact('proyecto'));
     }
 
-    public function update(Request $request, Proyecto $proyecto)
+    public function update(ProyectoRequest $request, Proyecto $proyecto)
     {
-        $validated = $request->validate([
-            'titulo'       => 'required|string|max:255',
-            'descripcion'  => 'nullable|string|max:2000',
-            'url'          => 'nullable|url|max:500',
-            'imagen'       => 'nullable|image|max:2048',
-            'tecnologias'  => 'nullable|string|max:1000',
-            'publicado'    => 'nullable|boolean',
-        ]);
+        $datos = $request->safe()->except('imagen');
+        $datos['publicado'] = $request->boolean('publicado');
 
-        // Manejo de imagen
         if ($request->hasFile('imagen')) {
-            // Elimina imagen anterior si existe
-            if ($proyecto->imagen && Storage::disk('public')->exists(str_replace('storage/', '', $proyecto->imagen))) {
-                Storage::disk('public')->delete(str_replace('storage/', '', $proyecto->imagen));
-            }
-
-            $path = $request->file('imagen')->store('proyectos', 'public');
-            $validated['imagen'] = 'storage/' . $path;
+            $this->borrarImagen($proyecto);
+            $datos['imagen'] = 'storage/'.$request->file('imagen')->store('proyectos', 'public');
         }
 
-        // Checkbox 'publicado' por defecto a 0 si no viene
-        $validated['publicado'] = $request->has('publicado') ? 1 : 0;
+        $proyecto->update($datos);
 
-        $proyecto->update($validated);
-
-        return redirect()
-            ->route('proyectos.index')
-            ->with('success', 'Proyecto actualizado correctamente.');
+        return redirect()->route('proyectos.index')->with('success', 'Proyecto actualizado correctamente.');
     }
 
     public function destroy(Proyecto $proyecto)
     {
-        // Eliminar imagen si existe
-        if ($proyecto->imagen && Storage::disk('public')->exists(str_replace('storage/', '', $proyecto->imagen))) {
-            Storage::disk('public')->delete(str_replace('storage/', '', $proyecto->imagen));
-        }
-
+        $this->borrarImagen($proyecto);
         $proyecto->delete();
 
-        return redirect()
-            ->route('proyectos.index')
-            ->with('success', 'Proyecto eliminado correctamente.');
+        return redirect()->route('proyectos.index')->with('success', 'Proyecto eliminado correctamente.');
+    }
+
+    private function borrarImagen(Proyecto $proyecto): void
+    {
+        if (filled($proyecto->imagen)) {
+            Storage::disk('public')->delete(Str::after($proyecto->imagen, 'storage/'));
+        }
     }
 }

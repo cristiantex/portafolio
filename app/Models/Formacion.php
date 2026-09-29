@@ -8,9 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Formacion extends Model
 {
     use HasFactory;
+
     protected $table = 'formacion';
+
     protected $fillable = [
         'institucion', 'titulo', 'tipo',
-        'fecha_inicio', 'fecha_fin', 'certificado_url'
+        'fecha_inicio', 'fecha_fin', 'certificado_url',
+    ];
+
+    protected $casts = [
+        'fecha_inicio' => 'date',
+        'fecha_fin' => 'date',
     ];
 }
