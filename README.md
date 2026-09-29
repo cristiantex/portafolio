@@ -29,40 +29,40 @@
 
 <table>
   <tr>
-    <td width="50%" valign="top">
+<td width="50%" valign="top">
 
 **🗂️ CRUD completo**
 Formación, tecnologías, experiencias y proyectos, todo desde un único dashboard.
 
-    </td>
-    <td width="50%" valign="top">
+</td>
+<td width="50%" valign="top">
 
 **🚀 Publicación opcional**
 Cada proyecto tiene un toggle para decidir si se muestra en el portafolio.
 
-    </td>
+</td>
   </tr>
   <tr>
-    <td width="50%" valign="top">
+<td width="50%" valign="top">
 
 **🏷️ Tecnologías como texto**
 Se guardan separadas por comas, simples de editar y de mostrar.
 
-    </td>
-    <td width="50%" valign="top">
+</td>
+<td width="50%" valign="top">
 
 **📱 Responsivo**
 Interfaz adaptada a escritorio, tablet y móvil.
 
-    </td>
+</td>
   </tr>
   <tr>
-    <td colspan="2" valign="top">
+<td colspan="2" valign="top">
 
 **🔎 Tablas inteligentes**
 Integración con **Simple-DataTables** para búsqueda y paginación instantáneas.
 
-    </td>
+</td>
   </tr>
 </table>
 
